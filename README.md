@@ -1,0 +1,2 @@
+# EggProgLang
+A JavaScript project

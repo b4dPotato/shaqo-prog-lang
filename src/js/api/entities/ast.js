@@ -1,4 +1,4 @@
-export default class AST {
+export class AST {
   constructor () {
     this.global = Object.create(null)
     this.stack = new Array()
@@ -6,6 +6,14 @@ export default class AST {
   
   addVol (vol) {
     this.global[vol.name] = vol
+  }
+
+  hasVol (name) {
+    return name in this.global
+  }
+
+  getVol (name) {
+    return this.global[name]
   }
 
   addAction (action) {

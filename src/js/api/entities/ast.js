@@ -8,6 +8,14 @@ export class AST {
     this.global[vol.name] = vol
   }
 
+  hasVol (name) {
+    return name in this.global
+  }
+
+  getVol (name) {
+    return this.global[name]
+  }
+
   addAction (action) {
     this.stack.push(action)
   }

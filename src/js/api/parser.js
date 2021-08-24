@@ -1,6 +1,7 @@
 import { excludeSpaces } from './utils'
-import { Primitive } from './entities'
+import { Primitive, Action } from './entities'
 import { TYPES } from './constants'
+
 export class Parser {
   constructor (ast) {
     this.ast = ast
@@ -24,21 +25,17 @@ export class Parser {
     if (remainProgram.length) {
       this.parseExpression(remainProgram)
     }
-  
-    return this.ast
+
+    console.log(this.ast) // b4dPotato
+    return
   }
-  
   
   parseAction (program) {
     let match, expr
     program = excludeSpaces(program)
     
     if (match = /^c\.(out|in)\((.+)\)/.exec(program)) {
-      expr = { 
-        type: TYPES.expression,
-        args: this.parseArguments(match[2]),
-        kind: 'c' + match[1]
-      }
+      expr = new Action({ type: TYPES.expression, args: this.parseArguments(match[2]), kind: 'c' + match[1]})
       this.ast.addAction(expr)
     } else {
       throw SyntaxError(`Unexpected syntax ${program}`)
@@ -47,21 +44,21 @@ export class Parser {
     return match
   }
   
-  
   parseArguments (program) {
-    let args = program.split(',').map(this.defineArgument)
+    let args = program.split(',').map(this.defineArgument.bind(this))
     return args
   }
   
-  
   defineArgument (val) {
     let value = val.trim()
-    let arg = new Primitive({ name: value })
+    let arg = {}
   
-    if (String(value).charAt(0) === '"') {
-      arg = new Primitive({ value: String(value).replace(/\"/g, '') })
+    if (this.ast.hasVol(value)) {
+      arg = this.ast.getVol(value)
+    } else if (String(value).charAt(0) === '"') {
+      arg = new Primitive({ type: TYPES.string, value: String(value) })
     } else if (!isNaN(value)) {
-      arg = new Primitive({ value: Number(value) })
+      arg = new Primitive({ type: TYPES.number, value: Number(value) })
     }
   
     return arg

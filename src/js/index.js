@@ -1,13 +1,12 @@
-import { AST, Primitive } from './api/entities'
-import { TYPES } from './api/constants'
+import { AST } from './api/entities'
 import { Interpreter } from './api/interpreter'
-import { topScope } from './api/topScope'
 import { Parser } from './api/parser'
 
 // let expression = `
 //   vol i = "asd"
 //   vol b = 1231
 // `
+
 let expression = `
   vol i = "asd"
   vol b = 1231
@@ -17,8 +16,8 @@ let expression = `
 `
 
 const ast = new AST()
-const interpreter = new Interpreter()
 const parser = new Parser(ast)
+const interpreter = new Interpreter()
 
 parser.parseExpression(expression)
 interpreter.interpret(ast)

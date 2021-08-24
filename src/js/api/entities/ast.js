@@ -20,4 +20,3 @@ export class AST {
     this.stack.push(action)
   }
 }
- 

@@ -1,14 +1,10 @@
 import { TYPES } from '../constants'
-
+import { Exceptions } from './exceptions'
 export class Primitive {
   constructor ({ name, type, value }) {
     this._name = name
     this._type = type
     this._value = value
-
-    if (!type) {
-      this.defineType()
-    }
   }
 
   set value (val) {
@@ -39,13 +35,5 @@ export class Primitive {
 
   get type () {
     return this._type
-  }
-
-  defineType () {
-    if (String(this.value).charAt(0) === '"') {
-      this.type = TYPES.string
-    } else if (!isNaN(this.value)) {
-      this.type = TYPES.number
-    }
   }
 }

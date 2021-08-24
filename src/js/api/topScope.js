@@ -5,34 +5,24 @@ const topScope = Object.create(null)
 const terminal = new Terminal()
 
 topScope.cin = async function (ast, args) {
-  if (!args) throw SyntaxError(`Invalid number of arguments - ${args.length}`)
-
-  let i = 0;
-
-  while(i < args.length) {
+  for (let i = 0; i < args.length; i++) {
     let inputVal = await terminal.getInput()
     let arg = args[i]
 
     console.log('<< ', arg.name)
 
     if (arg.name) {
-      ast.global[arg.name].value = inputVal  // Remove actions with ast
+      ast.getVol(arg.name).value = inputVal  // Remove actions with ast
     } else {
       Exceptions.primitiveAssignError({ type: arg.type })
     }
-
-    i++
   }
 
   return args
 }
 
-topScope.cout = async function (ast, args) { // Remove action from argument
-  if (!args) throw SyntaxError(`Invalid number of arguments - ${args.length}`)
-  console.log(args)
-  let i = 0;
-
-  while(i < args.length) {
+topScope.cout = async function (ast, args) {
+  for (let i = 0; i < args.length; i++) {
     let arg = args[i]
     
     if(arg?.name) {
@@ -40,8 +30,6 @@ topScope.cout = async function (ast, args) { // Remove action from argument
     } else {
       Exceptions.referenceError({ name: arg.name })
     }
-
-    i++
   }
 
   return args

@@ -88,8 +88,9 @@ async function interpret (ast) {
 let expression = `
   vol i = "asd"
   vol b = 1231
+  c.out(i, b)
   c.in(i, b)
-  c.out(i, c, b)
+  c.out(i, b)
 `
 
 parseExpression(expression)

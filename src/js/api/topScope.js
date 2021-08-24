@@ -1,4 +1,4 @@
-import Terminal from './terminal'
+import { Terminal } from './terminal'
 import { Exceptions } from './entities'
 
 const topScope = Object.create(null)
@@ -47,4 +47,4 @@ topScope.cout = async function (ast, args) { // Remove action from argument
   return args
 }
 
-export default topScope
+export { topScope }

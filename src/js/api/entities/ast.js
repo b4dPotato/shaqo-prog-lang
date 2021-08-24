@@ -1,4 +1,4 @@
-export default class AST {
+export class AST {
   constructor () {
     this.global = Object.create(null)
     this.stack = new Array()

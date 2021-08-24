@@ -1,9 +1,3 @@
-import AST from './ast'
-import Exceptions from './exceptions'
-import Primitive from './primitive'
-
-export {
-  AST,
-  Exceptions,
-  Primitive
-}
+export { AST } from './ast'
+export { Exceptions } from './exceptions'
+export { Primitive } from './primitive'

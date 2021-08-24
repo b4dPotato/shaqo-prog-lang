@@ -1,4 +1,4 @@
-export default class Exceptions {
+export class Exceptions {
   static typeError ({ value, type }) {
     throw new TypeError(`Cannot set value ${value} of type ${type}`)
   }

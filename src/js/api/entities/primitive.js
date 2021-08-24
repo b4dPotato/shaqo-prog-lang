@@ -1,6 +1,6 @@
 import { TYPES } from '../constants'
 
-export default class Primitive {
+export class Primitive {
   constructor ({ name, type, value }) {
     this._name = name
     this._type = type

@@ -1,4 +1,4 @@
-export default class Terminal {
+export class Terminal {
   getInput () {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

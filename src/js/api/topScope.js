@@ -1,10 +1,11 @@
 import { Terminal } from './terminal'
 import { Exceptions } from './entities'
+import { EXPRESSIONS } from './constants'
 
 const topScope = Object.create(null)
 const terminal = new Terminal()
 
-topScope.cin = async function (ast, args) {
+topScope[EXPRESSIONS.cin] = async function (ast, args) {
   if (!args) throw SyntaxError(`Invalid number of arguments - ${args.length}`)
 
   let i = 0;
@@ -27,7 +28,7 @@ topScope.cin = async function (ast, args) {
   return args
 }
 
-topScope.cout = async function (ast, args) { // Remove action from argument
+topScope[EXPRESSIONS.cout] = async function (ast, args) { // Remove action from argument
   if (!args) throw SyntaxError(`Invalid number of arguments - ${args.length}`)
   console.log(args)
   let i = 0;
@@ -46,5 +47,9 @@ topScope.cout = async function (ast, args) { // Remove action from argument
 
   return args
 }
+
+EXPRESSIONS.mathOperators.forEach(action => {
+  topScope[action.operator] = new Function('ast' ,'args', `return args[0] ${action.operator} args[1]`)
+})
 
 export { topScope }

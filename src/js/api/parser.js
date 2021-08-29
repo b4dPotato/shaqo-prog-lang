@@ -25,9 +25,6 @@ export class Parser {
     if (remainProgram.length) {
       this.parseExpression(remainProgram)
     }
-
-    console.log(this.ast) // b4dPotato
-    return
   }
   
   parseAction (program) {

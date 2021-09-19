@@ -1,22 +1,22 @@
 export class AST {
-  constructor () {
+  constructor() {
     this.global = Object.create(null)
     this.stack = new Array()
   }
-  
-  addVol (vol) {
+
+  addVol(vol) {
     this.global[vol.name] = vol
   }
 
-  hasVol (name) {
+  addAction(action) {
+    this.stack.push(action)
+  }
+
+  hasVol(name) {
     return name in this.global
   }
 
-  getVol (name) {
+  getVol(name) {
     return this.global[name]
-  }
-
-  addAction (action) {
-    this.stack.push(action)
   }
 }

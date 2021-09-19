@@ -8,12 +8,14 @@ import { Parser } from './api/parser'
 // `
 
 let expression = `
-  vol i = "asd"
-  vol b = 1231
-  c.out(i, b)
-  c.in(i, b)
-  c.out(i, b)
+  2+2*2*54/42.412
 `
+
+// vol i = "asd"
+// vol b = 1231
+// c.out(i, b)
+// c.in(i, b)
+// c.out(i, b)
 
 const ast = new AST()
 const parser = new Parser(ast)

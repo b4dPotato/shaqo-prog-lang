@@ -1,7 +1,11 @@
 export const TYPES = {
   string: 'String',
   number: 'Number',
-  expression: 'Expression'
+  expression: 'Expression',
+}
+
+export const EXPRESSION_TYPES = {
+  mathExpression: 'MathExpression',
 }
 
 export const EXPRESSIONS = {

@@ -6,9 +6,10 @@ import { Parser } from './api/parser'
 //   vol i = "asd"
 //   vol b = 1231
 // `
+// 2+3+35*52+5*421*63*4421
 
 let expression = `
-  2+2*2*54/42.412
+  2+3+4+5+6*6+5*6*412
 `
 
 // vol i = "asd"

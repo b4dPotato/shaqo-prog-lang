@@ -1,5 +1,5 @@
 import { excludeSpaces } from './utils'
-import { Primitive, Action } from './entities'
+import { Primitive, Action, MathExpression } from './entities'
 import { TYPES } from './constants'
 
 export class Parser {
@@ -42,13 +42,51 @@ export class Parser {
     if ((match = /^c\.(out|in)\((.+)\)/.exec(program))) {
       expr = new Action({ type: TYPES.expression, args: this.parseArguments(match[2]), kind: 'c' + match[1] })
       this.ast.addAction(expr)
-    } else if ((match = /^(\d*\.?\d*)([+*/-])?(\d*\.?\d*)/g.exec(program))) {
-      console.log('MATH Expression', match)
+    } else if (/\d*\.?\d*[+*/-]?\d*\.?\d*/g.test(program)) {
+      match = [program] // Todo: Make smart regExp, with parsing to AST. Check babel parser realization.
+      expr = this.parseMathExpression(program)
+      this.ast.addAction(expr)
     } else {
       throw SyntaxError(`Unexpected syntax ${program}`)
     }
 
     return match
+  }
+
+  parseMathExpression(program) {
+    if (!program) return
+    let match, expr, subExpr
+
+    let matchTests = [
+      RegExp(/(?<restExp>.+?)(?<firstOp>[\+\-\*\/]?)(?<firstArg>(?<=[\+\-])\d+)?(?<secondOp>[\+\-])(?<secondArg>\d+)$/),
+      RegExp(/(?<restExp>.+?)(?<firstOp>[\+\-\*\/]?)(?<firstArg>\d+)(?<secondOp>[\*\/])(?<secondArg>\d+)$/)
+    ]
+
+    for (let test of matchTests) {
+      if ((match = test.exec(program))) {
+        break
+      }
+    }
+
+    console.log('program', program)
+    console.log('match', match)
+
+    const { restExp, firstOp, secondOp, firstArg, secondArg } = match.groups
+
+    subExpr = new MathExpression({
+      left: firstArg,
+      operator: secondOp,
+      right: secondArg,
+    })
+
+    expr = new MathExpression({
+      left: this.parseMathExpression(restExp),
+      operator: firstOp,
+      right: subExpr,
+    })
+
+    // Return program to slice whole expression in initial @function parseExpression()
+    return expr
   }
 
   parseArguments(program) {

@@ -5,7 +5,7 @@ export class Interpreter {
     if (!ast.stack.length) return
   
     if (ast.stack.length) {
-      console.log('stack --start', [...ast.stack])
+      console.log('[stack] start', [...ast.stack])
 
       let action = ast.stack[0]
       if (action.type === TYPES.expression) {
@@ -14,8 +14,8 @@ export class Interpreter {
         ast.stack.shift()
       }
 
-      this.interpret(ast)
-      console.log('stack --end', [...ast.stack])
+      // this.interpret(ast)
+      console.log('[stack] end', [...ast.stack])
     }
   }
 }
